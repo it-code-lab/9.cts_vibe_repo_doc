@@ -1,0 +1,67 @@
+# -----------------------------
+# OS-Specific Files
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Python - Backend
+# -----------------------------
+__pycache__/
+# *.py[cod]
+# *.pyo
+# *.pyd
+*.log
+*.tmp
+*.sqlite3
+*.db
+venv/
+.env
+.env.*        # If using .env.local, .env.dev, etc.
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Uploaded or generated zip/code files
+*.zip
+*.tar.gz
+*.bak
+
+# Jupyter (if you use notebooks)
+.ipynb_checkpoints
+
+# -----------------------------
+# FastAPI Auto Docs Cache
+# -----------------------------
+docs/__pycache__/
+
+# -----------------------------
+# Node.js - Frontend
+# -----------------------------
+frontend/node_modules/
+frontend/build/
+frontend/.env
+frontend/.DS_Store
+frontend/.eslintcache
+
+# -----------------------------
+# VS Code and JetBrains IDEs
+# -----------------------------
+.vscode/
+.idea/
+
+# -----------------------------
+# Testing & Coverage
+# -----------------------------
+.coverage
+.tox/
+.nox/
+.pytest_cache/
+htmlcov/
+
+# -----------------------------
+# Logs
+# -----------------------------
+*.log
+logs/
