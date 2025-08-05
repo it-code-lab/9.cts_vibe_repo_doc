@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from codeparser.python_parser import parse_python_code, extract_routes
 from codeparser.env_parser import extract_env_vars, generate_env_sample
 from utils.repo_handler import handle_uploaded_zip, handle_repo_clone
+from codeparser.overview_generator import generate_project_overview
+from codeparser.tree_generator import generate_file_tree
+
 import shutil
 import os
 
@@ -31,9 +34,13 @@ async def analyze_code(request: Request, file: UploadFile = None, repo_url: str 
         parsed_data = parse_python_code(project_path)
         env_vars = extract_env_vars(project_path)
         env_sample = generate_env_sample(env_vars)
+        overview = generate_project_overview(project_path)
+        file_tree = generate_file_tree(project_path)
 
         # Format the README
-        readme_content = f"# Auto-Generated README\n\n"
+        readme_content = f"# Auto-Generated README\n\n{overview}\n"
+
+        readme_content += f"## File Tree:\n{file_tree}\n"
 
         if parsed_data:
             readme_content += f"## Functions:\n{parsed_data}\n\n"
