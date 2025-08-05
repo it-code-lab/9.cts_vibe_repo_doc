@@ -10,7 +10,6 @@ function App() {
   const [envSample, setEnvSample] = useState("");
   const [loading, setLoading] = useState(false);
 
-
   // const handleSubmit = async () => {
   //   const formData = new FormData();
   //   formData.append("file", file);
@@ -48,7 +47,7 @@ function App() {
     } catch (err) {
       console.error(err);
       alert("Error: " + (err.response?.data?.detail || err.message));
-    }finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -73,11 +72,44 @@ function App() {
     URL.revokeObjectURL(url);
   };
 
+  const downloadZip = async () => {
+    const formData = new FormData();
+    if (file) {
+      formData.append("file", file);
+    } else if (repoUrl) {
+      formData.append("repo_url", repoUrl);
+    } else {
+      alert("Please upload a file or enter a repo URL first.");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:8000/download-docs/", {
+        method: "POST",
+        body: formData,
+      });
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "project_docs.zip";
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      alert("Error downloading ZIP: " + err.message);
+    }
+  };
+
   return (
     <div className="App">
       <h1>ReadmeBoost</h1>
 
-      <input type="file" disabled={loading} onChange={(e) => setFile(e.target.files[0])} />
+      <input
+        type="file"
+        disabled={loading}
+        onChange={(e) => setFile(e.target.files[0])}
+      />
 
       <input
         type="text"
@@ -93,16 +125,25 @@ function App() {
         }}
       />
 
-      <button onClick={handleSubmit} disabled={loading}>Generate Docs</button>
+      <button onClick={handleSubmit} disabled={loading}>
+        Generate Docs
+      </button>
 
       {readme && (
         <>
           <div className="readme-preview">
             <ReactMarkdown>{readme}</ReactMarkdown>
           </div>
+
+          <button onClick={downloadZip} disabled={loading}>
+            Download All Docs (.zip)
+          </button>
+
           <button onClick={downloadReadme}>Download README</button>
         </>
       )}
+
+
 
       {envSample && (
         <button onClick={() => downloadFile(envSample, ".env.sample")}>
@@ -116,7 +157,6 @@ function App() {
           <p>Analyzing your code…</p>
         </div>
       )}
-
     </div>
 
     // <div className="App">

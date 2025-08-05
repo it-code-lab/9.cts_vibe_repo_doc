@@ -5,6 +5,8 @@ from codeparser.env_parser import extract_env_vars, generate_env_sample
 from utils.repo_handler import handle_uploaded_zip, handle_repo_clone
 from codeparser.overview_generator import generate_project_overview
 from codeparser.tree_generator import generate_file_tree
+from fastapi.responses import FileResponse
+from utils.doc_bundler import bundle_docs
 
 import shutil
 import os
@@ -78,3 +80,37 @@ async def analyze_code(request: Request, file: UploadFile = None, repo_url: str 
 @app.get("/")
 def root():
     return {"status": "Backend is working"}
+
+@app.post("/download-docs/")
+async def download_docs(file: UploadFile = None, repo_url: str = Form(None)):
+    try:
+        if file:
+            project_path = await handle_uploaded_zip(file)
+        elif repo_url:
+            project_path = handle_repo_clone(repo_url)
+        else:
+            raise HTTPException(status_code=400, detail="No input provided")
+
+        routes = extract_routes(project_path)
+        functions = parse_python_code(project_path)
+        env_vars = extract_env_vars(project_path)
+        env_sample = generate_env_sample(env_vars)
+        overview = generate_project_overview(project_path)
+        file_tree = generate_file_tree(project_path)
+
+        # Assemble readme
+        readme_content = f"# Auto-Generated README\n\n{overview}\n"
+        readme_content += f"## File Tree:\n{file_tree}\n\n"
+        if functions:
+            readme_content += f"## Functions:\n{functions}\n\n"
+        if routes:
+            readme_content += f"## API Routes:\n" + "\n".join(routes) + "\n\n"
+        if env_sample:
+            readme_content += f"## .env variables:\n{env_sample}\n"
+
+        # Bundle
+        zip_path = bundle_docs(readme_content, env_sample if env_sample else None)
+        return FileResponse(zip_path, filename="project_docs.zip", media_type="application/zip")
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
