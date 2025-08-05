@@ -31,8 +31,18 @@ function App() {
       const formData = new FormData();
 
       if (file) {
+        const isZip = file.name.endsWith(".zip");
+        if (!isZip) {
+          alert("Only .zip files are supported.");
+          return;
+        }        
         formData.append("file", file);
       } else if (repoUrl) {
+        const isValidGitHubUrl = /^https:\/\/github\.com\/[^\/]+\/[^\/]+$/.test(repoUrl.trim());
+        if (!isValidGitHubUrl) {
+          alert("Please enter a valid GitHub repo URL (e.g., https://github.com/user/repo).");
+          return;
+        }        
         formData.append("repo_url", repoUrl);
       } else {
         alert("Please select a file or enter a GitHub repo URL.");

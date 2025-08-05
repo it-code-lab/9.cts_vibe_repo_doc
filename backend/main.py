@@ -24,10 +24,15 @@ app.add_middleware(
 
 @app.post("/analyze/")
 async def analyze_code(request: Request, file: UploadFile = None, repo_url: str = Form(None)):
+    
+    GITHUB_REPO_REGEX = r'^https:\/\/github\.com\/[^\/]+\/[^\/]+$'
+
     try:
         if file:
             project_path = await handle_uploaded_zip(file)
         elif repo_url:
+            if not re.match(GITHUB_REPO_REGEX, repo_url.strip()):
+                raise HTTPException(status_code=400, detail="Invalid GitHub repository URL.")
             project_path = handle_repo_clone(repo_url)
         else:
             raise HTTPException(status_code=400, detail="No input provided")
