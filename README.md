@@ -1,69 +1,101 @@
-README Boost is a modern web application that automatically generates professional-quality README.md files from GitHub repositories or uploaded source code archives. It's built with React and FastAPI and focuses on enhancing developer productivity and documentation quality.
+# 🚀 ReadMe Boost
 
-🚀 Features
+**ReadMe Boost** is a modern, full-stack web application that automatically generates high-quality, professional `README.md` files from GitHub repositories or uploaded source code archives. Designed with productivity and clarity in mind, it empowers developers to create impressive documentation with minimal effort.
 
-✅ Implemented:
+Built using **React + FastAPI**, it streamlines the documentation process with intelligent code parsing, dynamic overviews, and seamless UI/UX.
 
-🔍 Analyze GitHub Repos or ZIP Uploads
+---
 
-🧠 Function Docstring Extraction
+## ✨ Key Features
 
-🎯 FastAPI/Flask Route Detection
+### ✅ Currently Implemented
 
-🧪 Dynamic .env.sample Generator
+- 🔍 **Smart Project Analysis**  
+  Analyze GitHub repositories or local ZIP archives instantly.
 
-⏳ Loading Spinner UI Feedback
+- 🧠 **Function Docstring Extraction**  
+  Extracts well-formatted Python function documentation automatically.
 
-📜 Markdown Preview with Syntax Highlighting
+- 🎯 **FastAPI / Flask Route Detection**  
+  Identifies and lists API routes in your project.
 
-🧱 File Tree Visualization
+- 📄 **Dynamic `.env.sample` Generator**  
+  Auto-detects environment variables and prepares sample files.
 
-📦 Download All Docs (README + .env + API_DOC) as ZIP
+- ⏳ **Responsive Loading Feedback**  
+  UI spinner ensures users are informed during processing.
 
-🧹 Project Overview Generator
+- 📜 **Live Markdown Preview**  
+  Syntax-highlighted README preview with proper formatting.
 
-🧪 In Queue:
+- 🧱 **Project File Tree Visualization**  
+  Displays project structure in an intuitive tree layout.
 
-🌐 Multi-language Parsing (JS, Java, PHP, etc.)
+- 📦 **One-Click Download**  
+  Exports all documentation files (`README.md`, `.env.sample`, etc.) as a ZIP bundle.
 
-🧾 Export OpenAPI (Swagger)
+- 🧹 **Project Overview Generator**  
+  Generates a human-readable summary from project files.
 
-🧠 AI-Powered Summaries
+---
 
-🔄 Editable README before Export
+### 🧪 Future enhancements
 
-📦 VS Code Extension
+- 🌐 **Multi-language Support**  
+  Parsing support for Java, JavaScript, PHP, and more.
 
-☁️ GitHub Actions (CI/CD Auto README)
+- 🧾 **OpenAPI (Swagger) Export**  
+  Generate Swagger-compatible API docs automatically.
 
-📦 Tech Stack
+- 🧠 **AI-Powered Summaries**  
+  Use AI to enhance or summarize complex modules and logic.
 
-Frontend: React + Tailwind CSS
+- 📝 **Editable README Preview**  
+  Make changes before downloading your final `README.md`.
 
-Backend: FastAPI (Python)
+- 💻 **VS Code Extension**  
+  Generate READMEs directly within your coding workflow.
 
-Parsing: ast, inspect, os, pathlib
+- ☁️ **GitHub Actions Integration**  
+  Auto-generate/update README.md on push via CI/CD.
 
-Optional AI: OpenAI (Pluggable)
+---
 
-📁 Example Output
+## 🧰 Tech Stack
 
+| Layer      | Technology           |
+|------------|----------------------|
+| Frontend   | React + Tailwind CSS |
+| Backend    | FastAPI (Python)     |
+| Parsing    | `ast`, `inspect`, `os`, `re`, `pathlib` |
+| Optional AI| OpenAI API (Modular Integration) |
 
+---
 
-⚙️ Installation
+## 📁 Sample Output
 
-# Backend
-venv\Scripts\activate
+Here’s a snapshot of what you can expect:
+- ✨ Professionally formatted `README.md`
+- 🧠 Extracted Python docstrings
+- 📄 `.env.sample` with detected keys
+- 🧭 File tree and project overview
+- 📦 Packaged together in a downloadable ZIP
+
+---
+
+## ⚙️ Local Installation
+
+### 🔧 Backend Setup
+
 cd backend
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn main:app --reload
 
-# Frontend
+### 🎨 Frontend Setup
+
 cd frontend
 npm install
 npm start
 
-
-📜 License
-
-MIT
