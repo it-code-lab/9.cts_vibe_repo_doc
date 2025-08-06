@@ -1,4 +1,4 @@
-READMEBoost is a modern web application that automatically generates professional-quality README.md files from GitHub repositories or uploaded source code archives. It's built with React and FastAPI and focuses on enhancing developer productivity and documentation quality.
+README Boost is a modern web application that automatically generates professional-quality README.md files from GitHub repositories or uploaded source code archives. It's built with React and FastAPI and focuses on enhancing developer productivity and documentation quality.
 
 🚀 Features
 

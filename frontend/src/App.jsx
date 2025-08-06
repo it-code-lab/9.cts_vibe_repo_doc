@@ -101,7 +101,7 @@ function App() {
   return (
     <ErrorBoundary>
       <div className="App">
-        <h1>ReadmeBoost</h1>
+        <h1>ReadMe Boost</h1>
 
         <input
           type="file"
