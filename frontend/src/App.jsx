@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import "./App.css";
+import ErrorBoundary from './components/ErrorBoundary';
+import React from 'react';
 
 function App() {
   const [file, setFile] = useState(null);
@@ -9,21 +11,6 @@ function App() {
   const [repoUrl, setRepoUrl] = useState("");
   const [envSample, setEnvSample] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // const handleSubmit = async () => {
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-
-  //   try {
-  //     const res = await axios.post("http://localhost:8000/analyze/", formData, {
-  //       headers: { "Content-Type": "multipart/form-data" },
-  //     });
-  //     setReadme(res.data.readme);
-  //   } catch (err) {
-  //     console.error("Error uploading file:", err);
-  //     alert("Failed to generate documentation.");
-  //   }
-  // };
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -112,72 +99,66 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>ReadmeBoost</h1>
+    <ErrorBoundary>
+      <div className="App">
+        <h1>ReadmeBoost</h1>
 
-      <input
-        type="file"
-        disabled={loading}
-        onChange={(e) => setFile(e.target.files[0])}
-      />
+        <input
+          type="file"
+          disabled={loading}
+          onChange={(e) => setFile(e.target.files[0])}
+        />
 
-      <input
-        type="text"
-        disabled={loading}
-        placeholder="Paste GitHub repo URL"
-        value={repoUrl}
-        onChange={(e) => setRepoUrl(e.target.value)}
-        style={{
-          width: "100%",
-          margin: "12px 0",
-          padding: "8px",
-          fontSize: "1rem",
-        }}
-      />
+        <input
+          type="text"
+          disabled={loading}
+          placeholder="Paste GitHub repo URL"
+          value={repoUrl}
+          onChange={(e) => setRepoUrl(e.target.value)}
+          style={{
+            width: "100%",
+            margin: "12px 0",
+            padding: "8px",
+            fontSize: "1rem",
+          }}
+        />
 
-      <button onClick={handleSubmit} disabled={loading}>
-        Generate Docs
-      </button>
-
-      {readme && (
-        <>
-          <div className="readme-preview">
-            <ReactMarkdown>{readme}</ReactMarkdown>
-          </div>
-
-          <button onClick={downloadZip} disabled={loading}>
-            Download All Docs (.zip)
-          </button>
-
-          <button onClick={downloadReadme}>Download README</button>
-        </>
-      )}
-
-
-
-      {envSample && (
-        <button onClick={() => downloadFile(envSample, ".env.sample")}>
-          Download .env.sample
+        <button onClick={handleSubmit} disabled={loading}>
+          Generate Docs
         </button>
-      )}
 
-      {loading && (
-        <div>
-          <div className="spinner"></div>
-          <p>Analyzing your code…</p>
-        </div>
-      )}
-    </div>
+        {readme && (
+          <>
+            <div className="readme-preview">
+              <ReactMarkdown>{readme}</ReactMarkdown>
+            </div>
 
-    // <div className="App">
-    //   <h1>📘 ReadmeBoost</h1>
-    //   <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-    //   <button onClick={handleSubmit}>Generate Docs</button>
-    //   <div className="readme-preview">
-    //     <ReactMarkdown>{readme}</ReactMarkdown>
-    //   </div>
-    //   <button onClick={downloadReadme}>Download README</button>
-    // </div>
+            <button onClick={downloadZip} disabled={loading}>
+              Download All Docs (.zip)
+            </button>
+
+            <button onClick={downloadReadme}>Download README</button>
+          </>
+        )}
+
+
+
+        {envSample && (
+          <button onClick={() => downloadFile(envSample, ".env.sample")}>
+            Download .env.sample
+          </button>
+        )}
+
+        {loading && (
+          <div>
+            <div className="spinner"></div>
+            <p>Analyzing your code…</p>
+          </div>
+        )}
+      </div>
+    </ErrorBoundary>
+
+
   );
 }
 

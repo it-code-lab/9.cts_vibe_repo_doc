@@ -7,7 +7,7 @@ from codeparser.overview_generator import generate_project_overview
 from codeparser.tree_generator import generate_file_tree
 from fastapi.responses import FileResponse
 from utils.doc_bundler import bundle_docs
-
+import re
 import shutil
 import os
 
@@ -67,19 +67,6 @@ async def analyze_code(request: Request, file: UploadFile = None, repo_url: str 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
-# @app.post("/analyze/")
-# async def analyze_code(file: UploadFile):
-#     project_path = await handle_uploaded_zip(file)
-#     parsed_data = parse_python_code(project_path)
-#     env_vars = extract_env_vars(project_path)
-    
-#     # Combine into simple README for now
-#     readme_content = f"# Auto-Generated README\n\n## Functions:\n{parsed_data}\n\n## .env variables:\n{env_vars}"
-#     with open(os.path.join(project_path, "README.md"), "w") as f:
-#         f.write(readme_content)
-
-#     return {"readme": readme_content}
 
 
 @app.get("/")
