@@ -2,7 +2,7 @@ READMEBoost is a modern web application that automatically generates professiona
 
 🚀 Features
 
-✅ Implemented
+✅ Implemented:
 
 🔍 Analyze GitHub Repos or ZIP Uploads
 
@@ -16,17 +16,13 @@ READMEBoost is a modern web application that automatically generates professiona
 
 📜 Markdown Preview with Syntax Highlighting
 
-⚖️ In Progress: Immediate Impact Items
-
-🧹 Project Overview Generator
-
 🧱 File Tree Visualization
-
-🧠 Class & Component Summary
 
 📦 Download All Docs (README + .env + API_DOC) as ZIP
 
-🧪 In Queue
+🧹 Project Overview Generator
+
+🧪 In Queue:
 
 🌐 Multi-language Parsing (JS, Java, PHP, etc.)
 
@@ -57,6 +53,7 @@ Optional AI: OpenAI (Pluggable)
 ⚙️ Installation
 
 # Backend
+venv\Scripts\activate
 cd backend
 pip install -r requirements.txt
 uvicorn main:app --reload
@@ -65,9 +62,6 @@ uvicorn main:app --reload
 cd frontend
 npm install
 npm start
-
-👥 Author
-
 
 
 📜 License
