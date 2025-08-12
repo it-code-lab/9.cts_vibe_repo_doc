@@ -83,19 +83,32 @@ Here’s a snapshot of what you can expect:
 
 ---
 
-## ⚙️ Local Installation
+## ⚙️ Local Installation & Running (Integrated Mode)
 
-### 🔧 Backend Setup
+This setup serves both **frontend** and **backend** from a single FastAPI server.
+
+### 1️⃣ Build Frontend & Copy to Backend
+```bash
+# From project root
+cd frontend
+npm install
+npm run build
+
+cd ..
+# Remove old static folder if exists (Windows)
+rmdir /S /Q backend\static
+mkdir backend\static
+
+# Copy build to backend/static (Windows)
+xcopy frontend\build\* backend\static\ /E /H /C /I
+
+### 2️⃣ Run Backend with Embedded Frontend
 
 cd backend
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn main:app --reload
 
-### 🎨 Frontend Setup
-
-cd frontend
-npm install
-npm start
-
+Visit: http://127.0.0.1:8000 → React UI loads
+Visit: http://127.0.0.1:8000/docs → FastAPI API docs

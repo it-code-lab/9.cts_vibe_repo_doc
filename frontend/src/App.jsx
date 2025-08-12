@@ -36,7 +36,10 @@ function App() {
         return;
       }
 
-      const res = await axios.post("http://localhost:8000/analyze/", formData, {
+      // const res = await axios.post("http://localhost:8000/analyze/", formData, {
+      //   headers: { "Content-Type": "multipart/form-data" },
+      // });
+     const res = await axios.post("/analyze/", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setReadme(res.data.readme);
@@ -81,11 +84,14 @@ function App() {
     }
 
     try {
-      const res = await fetch("http://localhost:8000/download-docs/", {
+      // const res = await fetch("http://localhost:8000/download-docs/", {
+      //   method: "POST",
+      //   body: formData,
+      // });
+      const res = await fetch("/download-docs/", {
         method: "POST",
         body: formData,
       });
-
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");

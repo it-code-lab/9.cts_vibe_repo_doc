@@ -10,6 +10,7 @@ from codeparser.tree_generator import generate_file_tree
 
 from utils.repo_handler import handle_uploaded_zip, handle_repo_clone
 from utils.doc_bundler import bundle_docs
+from fastapi.staticfiles import StaticFiles
 
 import os
 import re
@@ -143,6 +144,14 @@ async def download_docs(file: UploadFile = None, repo_url: str = Form(None)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.get("/")
-def root():
-    return {"status": "Backend is working"}
+# @app.get("/")
+# def root():
+#     return {"status": "Backend is working"}
+
+# Health endpoint (optional)
+@app.get("/health")
+def health():
+    return {"ok": True}
+
+# Serve React build (placed in backend/static)
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
